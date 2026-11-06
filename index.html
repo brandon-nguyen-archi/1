@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brandon Nguyen</title>
+<meta name="description" content="Architecture and design portfolio of Brandon Nguyen, Rice University School of Architecture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: a drawing sheet. Left-aligned masthead, 12-column grid, text set in an offset column like a monograph, each project opened by a title block. */
+:root {
+  --paper: #f6f6f3;      /* bristol board */
+  --ink: #1c1c1a;        /* graphite */
+  --muted: #6d6d68;
+  --rule: #d6d6d0;
+  --plate: #ffffff;      /* mat behind drawings */
+  --accent: #d9622b;     /* the orange inside the Geometric Abstraction model */
+  --font: "Jost", "Futura", "Century Gothic", "Avenir Next", system-ui, sans-serif;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 5vw, 3.75rem);
+  --gutter: clamp(16px, 4vw, 56px);
+  --max: 1440px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #151514; --ink: #ebebe6; --muted: #9b9b95; --rule: #2f2f2c; --plate: #1f1f1d; --accent: #ef7a41;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #151514; --ink: #ebebe6; --muted: #9b9b95; --rule: #2f2f2c; --plate: #1f1f1d; --accent: #ef7a41;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--font); font-size: var(--step-0); font-weight: 400; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3 { font-weight: 300; line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+
+.wrap {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(12px, 2vw, 28px); }
+
+/* Masthead */
+.mast { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.mast .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding-block: 18px; }
+.wordmark { font-size: var(--step-0); font-weight: 400; letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none; }
+.mast nav { display: flex; flex-wrap: wrap; gap: 4px 28px; }
+.mast nav a { text-decoration: none; color: var(--muted); }
+.mast nav a:hover, .mast nav a[aria-current="true"] { color: var(--ink); }
+
+/* Home hero */
+.hero { padding-block: clamp(40px, 7vw, 96px) clamp(48px, 8vw, 112px); align-items: end; row-gap: 40px; }
+.hero-text { grid-column: 1 / span 5; display: grid; gap: 28px; align-self: end; }
+.hero-name { font-size: var(--step-3); letter-spacing: 0.08em; text-transform: uppercase; }
+.hero-lede { font-size: var(--step-1); font-weight: 300; max-width: 30ch; line-height: 1.45; }
+.hero-meta { color: var(--muted); font-size: var(--step--1); display: grid; gap: 2px; }
+.hero-figure { grid-column: 7 / -1; margin: 0; }
+.hero-figure img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 60% 80%; background: #000; }
+.hero-figure figcaption { margin-top: 10px; font-size: var(--step--1); color: var(--muted); }
+
+/* Section headers */
+.section { padding-block: clamp(56px, 8vw, 104px); border-top: 1px solid var(--rule); }
+.section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: clamp(32px, 5vw, 56px); }
+.section-head h2 { font-size: var(--step-2); letter-spacing: 0.06em; text-transform: uppercase; }
+.section-head p { color: var(--muted); font-size: var(--step--1); }
+
+/* Project index */
+.projects { row-gap: clamp(48px, 7vw, 88px); }
+.card { text-decoration: none; display: grid; gap: 14px; align-content: start; }
+.card:nth-child(4n+1) { grid-column: 1 / span 7; }
+.card:nth-child(4n+2) { grid-column: 9 / span 4; margin-top: clamp(40px, 10vw, 160px); }
+.card:nth-child(4n+3) { grid-column: 2 / span 5; }
+.card:nth-child(4n+4) { grid-column: 7 / span 6; margin-top: clamp(24px, 6vw, 96px); }
+.card .frame { overflow: hidden; background: var(--plate); }
+.card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.6s ease; }
+.card:nth-child(4n+2) img { aspect-ratio: 4 / 5; }
+.card:hover img { transform: scale(1.025); }
+.card-title { display: flex; gap: 14px; align-items: baseline; }
+.card-num { font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
+.card-name { font-size: var(--step-1); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 400; }
+.card:hover .card-name { color: var(--accent); }
+.card-sub { color: var(--muted); font-size: var(--step--1); padding-left: calc(1.4em + 14px); }
+
+/* Other work */
+.other { row-gap: 40px; }
+.other-item { grid-column: span 3; display: grid; gap: 12px; align-content: start; }
+.placeholder {
+  aspect-ratio: 4 / 5; border: 1px dashed var(--rule); display: grid; place-items: center;
+  color: var(--muted); font-size: var(--step--1); text-align: center; padding: 16px;
+  background:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px) 0 0 / 24px 24px;
+  background-color: var(--paper);
+}
+.placeholder span { background: var(--paper); padding: 4px 10px; }
+.other-item h3 { font-size: var(--step-1); font-weight: 400; letter-spacing: 0.04em; }
+.other-item p { color: var(--muted); font-size: var(--step--1); max-width: 34ch; }
+
+/* About */
+.about { row-gap: 48px; }
+.bio { grid-column: 1 / span 6; display: grid; gap: 20px; align-content: start; }
+.bio p { font-size: var(--step-1); font-weight: 300; line-height: 1.5; max-width: 36ch; }
+.contact { display: grid; gap: 10px; margin-top: 12px; font-size: var(--step-0); }
+.contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.contact-label { color: var(--muted); font-size: var(--step--1); width: 5.5em; }
+.copy-btn {
+  font: inherit; font-size: var(--step--1); color: var(--muted); background: none;
+  border: 1px solid var(--rule); padding: 2px 10px; cursor: pointer;
+}
+.copy-btn:hover { color: var(--ink); border-color: var(--ink); }
+.cv { grid-column: 8 / -1; display: grid; gap: 36px; }
+.cv h3 { font-size: var(--step--1); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-bottom: 10px; border-bottom: 1px solid var(--rule); margin-bottom: 14px; }
+.cv dl { margin: 0; display: grid; gap: 14px; }
+.cv-row { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 16px; }
+.cv dt { color: var(--muted); font-size: var(--step--1); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.cv dd { margin: 0; }
+.cv dd small { display: block; color: var(--muted); font-size: var(--step--1); }
+.cv ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cv ul li small { color: var(--muted); font-size: var(--step--1); }
+
+footer { border-top: 1px solid var(--rule); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 28px; color: var(--muted); font-size: var(--step--1); }
+
+/* Project page */
+.project { padding-block: clamp(32px, 5vw, 64px) clamp(56px, 8vw, 104px); }
+.back { display: inline-block; margin-bottom: clamp(28px, 4vw, 48px); color: var(--muted); text-decoration: none; font-size: var(--step--1); }
+.back:hover { color: var(--ink); }
+.p-head { row-gap: 32px; margin-bottom: clamp(40px, 6vw, 72px); align-items: end; }
+.p-title { grid-column: 1 / span 7; display: grid; gap: 18px; }
+.p-num { font-size: var(--step-1); color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 300; }
+.p-title h1 { font-size: var(--step-3); letter-spacing: 0.06em; text-transform: uppercase; }
+.p-intro { font-size: var(--step-1); font-weight: 300; line-height: 1.5; max-width: 40ch; }
+
+.titleblock { grid-column: 9 / -1; border: 1px solid var(--ink); background: var(--ink); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; font-size: var(--step--1); align-self: end; }
+.tb-cell { padding: 8px 12px 10px; background: var(--paper); min-width: 0; }
+.tb-cell.wide { grid-column: 1 / -1; }
+.tb-label { display: block; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.tb-value { overflow-wrap: anywhere; }
+
+.blocks { display: grid; gap: clamp(28px, 4vw, 56px); }
+.b-text { grid-column: 5 / span 6; display: grid; gap: 1em; max-width: 62ch; }
+.b-text p { font-size: 1.0625rem; line-height: 1.7; }
+.fig { margin: 0; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.fig button { all: unset; cursor: zoom-in; display: block; background: var(--plate); }
+.fig button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.fig img { width: 100%; }
+.fig figcaption { font-size: var(--step--1); color: var(--muted); max-width: 52ch; }
+.b-full { grid-column: 1 / -1; }
+.b-medium { grid-column: 3 / span 8; }
+.b-pair, .b-trio, .b-quad { grid-column: 1 / -1; display: grid; gap: clamp(12px, 2vw, 28px); align-items: start; }
+.b-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.b-trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.b-quad { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.b-split { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(12px, 2vw, 28px); row-gap: 28px; align-items: center; }
+.b-split .fig { grid-column: 1 / span 6; }
+.b-split .b-text { grid-column: 8 / span 5; }
+
+.p-nav { margin-top: clamp(56px, 8vw, 104px); padding-top: 24px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.p-nav a { text-decoration: none; display: grid; gap: 2px; }
+.p-nav a span { font-size: var(--step--1); color: var(--muted); }
+.p-nav a strong { font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; }
+.p-nav a:last-child { text-align: right; margin-left: auto; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 96%, transparent);
+  display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px;
+  padding: calc(56px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  cursor: zoom-out;
+}
+.lightbox img { width: 100%; height: 100%; object-fit: contain; }
+.lightbox p { text-align: center; color: var(--muted); font-size: var(--step--1); }
+.lb-close {
+  position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  font: inherit; font-size: var(--step--1); background: none; border: 1px solid var(--rule); color: var(--ink); padding: 4px 12px; cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .hero-text, .hero-figure, .bio, .cv, .p-title, .titleblock, .b-text, .b-medium { grid-column: 1 / -1; }
+  .hero-figure { order: -1; }
+  .card:nth-child(n) { grid-column: 1 / -1; margin-top: 0; }
+  .card:nth-child(n) img { aspect-ratio: 4 / 3; }
+  .other-item { grid-column: span 6; }
+  .b-split .fig, .b-split .b-text { grid-column: 1 / -1; }
+  .b-quad { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .b-trio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .b-trio .fig:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .b-pair, .b-trio { grid-template-columns: minmax(0, 1fr); }
+  .b-trio .fig:last-child:nth-child(odd) { grid-column: auto; }
+  .cv-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="wrap">
+    <a class="wordmark" href="#">Brandon Nguyen</a>
+    <nav aria-label="Main">
+      <a href="#architecture" data-nav="architecture">Architecture</a>
+      <a href="#design" data-nav="design">Design &amp; Art</a>
+      <a href="#about" data-nav="about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Brandon Nguyen</span>
+    <span>Rice University School of Architecture</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lb-close" id="lb-close" type="button">Close</button>
+  <img id="lb-img" alt="">
+  <p id="lb-cap"></p>
+</div>
+
+<script>
+/* ---------- Content: edit this section to update the site ---------- */
+const PROJECTS = [
+  {
+    slug: "geometric-abstraction", title: "Geometric Abstraction", cover: "ga-hero",
+    sub: "Formal study in paper models and graphite",
+    facts: { Type: "Formal study", Term: "Fall 2025", Media: "Paper models, graphite on paper", Site: "None" },
+    intro: "A series of physical models and drawings that grow in complexity over the length of the assignment.",
+    blocks: [
+      { full: ["ga-hero", "Final model"] },
+      { text: ["A series of nine drawings started the project. Derived from three rectangles and the triangular negative space between them, the final geometry emerges."] },
+      { pair: [["ga-drawing-series", "Nine drawings derived from three rectangles"], ["ga-model-series", "Nine study models"]] },
+      { text: ["These same transformations were taken to a physical form. In a set of nine physical models that represented the same operations of intersection, simple geometries collide to generate more complex figures.",
+               "The final models continue the operations from the original two series. By focusing on how the base geometry of a quadrilateral prism can be deformed and intersected to create both volume and voids, the final form appears."] },
+      { pair: [["ga-final-1", "Final model"], ["ga-final-2", "Final model"]] },
+      { text: ["Orthogonal section cuts derived from the physical massing model investigate its internal spatial logic. Executed by hand, these drawings use directional hatching to articulate volumetric depth, establishing a clear hierarchy between the solid exterior planes and the revealed interior cavities."] },
+      { pair: [["ga-section-1", "Section cut, graphite on paper"], ["ga-section-2", "Section cut, graphite on paper"]] }
+    ]
+  },
+  {
+    slug: "totem", title: "Totem", cover: "totem-hero",
+    sub: "Aggregation of a single wooden unit",
+    facts: { Type: "Aggregation study", Term: "Fall 2025", Media: "Wood, digital drawings", Site: "None" },
+    intro: "Totem explores geometric and systematic evolution, generating an overall organization in which the whole is greater than the sum of its parts.",
+    blocks: [
+      { split: [["totem-hero", "Final model"], ["This project explores the aggregation of a single base unit, composed of three intersecting triangular prisms, through a dual system of joinery.",
+        "The form charts a vertical transition in structural logic, shifting from a heavy, orthogonally interlocked base to a delicate, surface-resting condition at the apex. This gradual release of joint rigidity results in a progressively lighter, expanding spatial canopy."]] },
+      { pair: [["totem-unit", "Base unit and aggregation"], ["totem-plan-section", "Top: plan, cut at 1'-0\". Bottom: section."]] },
+      { pair: [["totem-detail", "Detail of the upper canopy"], ["cover-totem-bw", "Study photograph"]] }
+    ]
+  },
+  {
+    slug: "mfah-library", title: "MFAH Library", cover: "mfah-hero",
+    sub: "A library for the Museum of Fine Arts, Houston",
+    facts: { Type: "Library", Term: "Fall 2025", Media: "Physical model, digital drawings", Site: "Museum of Fine Arts, Houston" },
+    intro: "An extension of the Museum of Fine Arts, Houston campus: a library on a vacant lot northeast of the Glassell School of Art, with an exhibition gallery, a fine art book collection and a children's area.",
+    blocks: [
+      { full: ["mfah-hero", "Physical model"] },
+      { pair: [["mfah-aerial", "Model, aerial view"], ["mfah-cantilever", "The cantilevered public volume"]] },
+      { text: ["The brief asked that the design take inspiration from Totem and Geometric Abstraction. The spatial sequence uses a series of irregular quadrilaterals derived directly from the geometry study to generate an interplay between solid mass and open void.",
+               "The structural liberation of the ground plane is guided by precedents like Diller Scofidio + Renfro's ICA Boston and OMA's Milstein Hall."] },
+      { pair: [["mfah-plan-12", "Plan, cut at 12'"], ["mfah-site-plan", "Plan, cut at 24', with site"]] },
+      { full: ["mfah-section", "Section"] },
+      { text: ["The internal logic of the architecture relies on fracturing the footprint into distinct structures. This keeps the ground plane porous and introduces terraced outdoor platforms between the buildings.",
+               "Subverting traditional programming, the spatial hierarchy makes the program increasingly public as one moves up through the building. This upward trajectory ends in the cantilevered volume: an expansive public space hovering above the site that acts as a social condenser while sheltering the pedestrian landscape below."] },
+      { medium: ["mfah-axon", "Exploded axonometric"] }
+    ]
+  },
+  {
+    slug: "external-systems", title: "External Systems", cover: "ext-hero",
+    sub: "Scalar mapping of Michael Heizer's 45, 90, 180",
+    facts: { Type: "Site analysis", Term: "Spring 2026", Media: "Photography, digital mapping", Site: "Engineering Quad, Rice University" },
+    intro: "An assignment on the qualities that shape building form, massing, surface and space, studied through Michael Heizer's sculpture series 45, 90, 180.",
+    blocks: [
+      { full: ["ext-hero", "Composite of one hundred radial photographs"] },
+      { text: ["The first part of the assignment was a scalar mapping of the sculpture series, focused on the 180 element. The analysis expands from a single perspective to a hundred: a lone nighttime view through the sculpture's core gap, a ten-image grid on materiality and its echoes across campus architecture, and a hundred-image radial survey of the sculpture within the engineering quad."] },
+      { trio: [["ext-night", "One image: nighttime view through the core gap"], ["ext-materials", "Ten images: materiality across campus"], ["ext-radial", "One hundred images: radial survey"]] },
+      { text: ["The final photo layers all one hundred radial photographs, stacking space and time into a single color field.",
+               "The second part mapped the photos with lines: a single continuous line tracing the physical path of the radial survey, ten vectors pointing to sites of material equivalence across campus, and one thousand lines tracking five minutes of my eye movement across a single photograph."] },
+      { trio: [["ext-line-1", "One line: path of the radial survey"], ["ext-line-10", "Ten lines: sites of material equivalence"], ["ext-line-1000", "One thousand lines: five minutes of eye movement"]] },
+      { text: ["The study ends in an algorithmic composite of all one hundred images, digitally isolated into high-contrast zones of saturation and lightness."] },
+      { medium: ["ext-composite-map", "Algorithmic composite of all one hundred images"] }
+    ]
+  },
+  {
+    slug: "internal-systems", title: "Internal Systems", cover: "int-hero",
+    sub: "Precedent study of Arata Isozaki's Hayashi House",
+    facts: { Type: "Precedent study", Term: "Spring 2026", Media: "Acrylic and plaster model, digital drawings", Site: "Hayashi House, Arata Isozaki" },
+    intro: "A precedent study of Arata Isozaki's Hayashi House, focused on the contrast between a winding, flexible, modular interior and the rigid, cave-like exterior that encases it.",
+    blocks: [
+      { split: [["int-hero", "Final model, acrylic and plaster"], ["To analyze this juxtaposition, I produced a series of drawings: an axonometric showing how branching circulation creates an expansive interior, a layered section cut showing spatial variation beneath consistent vaulted ceilings, and a distorted plan mapping how natural light pierces the solid exterior through clerestories and skylights."]] },
+      { trio: [["int-axon", "Axonometric: branching circulation"], ["int-sections", "Layered section cuts"], ["int-light-plan", "Light-distorted plan"]] },
+      { text: ["I then brought these ideas together in a final acrylic and plaster model that captures the project's modularity, vaulted forms and play of light."] },
+      { pair: [["int-model-1", "Final model"], ["int-model-2", "Final model, aerial view"]] }
+    ]
+  },
+  {
+    slug: "menil-extension", title: "Menil Extension", cover: "menil-hero",
+    sub: "A landscape pavilion on the Menil campus",
+    facts: { Type: "Pavilion", Term: "Spring 2026", Media: "Physical models, digital drawings, rendering", Site: "The Menil Collection, Houston" },
+    intro: "An exploration of intersecting systems: a pavilion on the Menil campus that bridges the built environment and the surrounding landscape.",
+    blocks: [
+      { full: ["menil-hero", "Rendering"] },
+      { text: ["The core concept is anchored by a grid mapped directly from the circulation paths of the existing campus buildings. By overlapping these established pedestrian flows, the extension integrates into the site and keeps movement easy and accessible for visitors."] },
+      { pair: [["menil-hilltop-plan", "Hilltop plan, 1/8\" = 1'-0\""], ["menil-plan", "Plan, 1/8\" = 1'-0\""]] },
+      { text: ["The shape language responds to the concentric squares on the roofs of the adjacent Drawing Institute and Cy Twombly Gallery. Circular forms modify that motif, producing a curvilinear shape that softens the rigidity of the site."] },
+      { medium: ["menil-site-plan", "Site plan, 1/16\" = 1'-0\""] },
+      { full: ["menil-section-a", "Section A, 1/8\" = 1'-0\""] },
+      { full: ["menil-section-b", "Section B, 1/8\" = 1'-0\""] },
+      { text: ["The curvilinear motif flows down into the structural grid, creating a biomorphic interior. Above, the landscape sweeps over the structural bones of the building, maximizing green space and letting the rooflines and the rolling terrain mirror one another."] },
+      { trio: [["menil-transformations", "Transformations diagram"], ["menil-axon", "Axonometric diagram"], ["menil-circulation", "Circulation diagram"]] },
+      { text: ["The pavilion takes a freeform approach to its program: three indoor rooms and one outdoor gathering area, an arrangement that can adapt to whatever the campus needs.",
+               "These connected areas offer varying exposure to nature, accommodating both large public gatherings and intimate, private moments."] },
+      { quad: [["menil-model-1", "Model detail"], ["menil-model-2", "Model, aerial view"], ["menil-model-3", "Model"], ["menil-model-4", "Model, plan view"]] }
+    ]
+  }
+];
+
+const OTHER = [
+  { title: "Rice Design Board", text: "Flyers, social posts and workshops as Graphics Lead." },
+  { title: "The Thresher", text: "Layout and illustration for Rice's student newspaper." },
+  { title: "Prints", text: "Personal printmaking and graphic work." },
+  { title: "Fine Art", text: "Painting, drawing and photography." }
+];
+
+/* ---------- Rendering ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pad = n => String(n).padStart(2, "0");
+
+function img(name, alt, sizes, eager) {
+  return `<img src="img/${name}-sm.jpg" srcset="img/${name}-sm.jpg 900w, img/${name}.jpg 1800w" sizes="${sizes}" alt="${esc(alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+}
+function fig([name, cap], sizes, eager) {
+  return `<figure class="fig"><button type="button" data-full="img/${name}.jpg" data-cap="${esc(cap)}" aria-label="Enlarge: ${esc(cap)}">${img(name, cap, sizes, eager)}</button><figcaption>${esc(cap)}</figcaption></figure>`;
+}
+const textBlock = paras => `<div class="b-text">${paras.map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
+
+function homeView() {
+  const cards = PROJECTS.map((p, i) => `
+    <a class="card" href="#${p.slug}">
+      <div class="frame">${img(p.cover, p.title, "(max-width: 860px) 100vw, 50vw", i < 2)}</div>
+      <div class="card-title"><span class="card-num">${pad(i + 1)}</span><h3 class="card-name">${esc(p.title)}</h3></div>
+      <p class="card-sub">${esc(p.sub)}</p>
+    </a>`).join("");
+  const other = OTHER.map(o => `
+    <div class="other-item">
+      <div class="placeholder"><span>Images coming soon</span></div>
+      <h3>${esc(o.title)}</h3>
+      <p>${esc(o.text)}</p>
+    </div>`).join("");
+  return `
+  <section class="wrap grid hero">
+    <div class="hero-text">
+      <h1 class="hero-name">Brandon Nguyen</h1>
+      <p class="hero-lede">Architecture student at Rice University, working through models, drawings and the space between them.</p>
+      <div class="hero-meta"><span>B.A. 2029, B.Arch 2031</span><span>Houston and Boston</span></div>
+    </div>
+    <figure class="hero-figure">
+      ${img("cover-totem-bw", "Black and white photograph of the Totem model", "(max-width: 860px) 100vw, 50vw", true)}
+      <figcaption>Totem, 2025</figcaption>
+    </figure>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="wrap">
+      <div class="section-head"><h2>Architecture</h2><p>Selected work, 2025&ndash;2026</p></div>
+      <div class="grid projects">${cards}</div>
+    </div>
+  </section>
+
+  <section class="section" id="design">
+    <div class="wrap">
+      <div class="section-head"><h2>Design &amp; Art</h2><p>Graphic design, illustration and fine art</p></div>
+      <div class="grid other">${other}</div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head"><h2>About</h2></div>
+      <div class="grid about">
+        <div class="bio">
+          <p>I'm studying architecture at the Rice School of Architecture. I work mostly through physical models and hand drawing, then carry that thinking into Rhino and Grasshopper.</p>
+          <p>Outside studio I design for The Thresher and Rice Design Board, paint, take photographs and build things in wood. I'm especially interested in urbanism, transportation and conservation.</p>
+          <div class="contact">
+            <div class="contact-row"><span class="contact-label">Email</span><a href="mailto:bn38@rice.edu" id="email">bn38@rice.edu</a><button class="copy-btn" type="button" id="copy-email">Copy</button></div>
+            <div class="contact-row"><span class="contact-label">LinkedIn</span><a href="https://www.linkedin.com/in/brandonb-nguyen-archi/" target="_blank" rel="noopener">brandonb-nguyen-archi</a></div>
+          </div>
+        </div>
+        <div class="cv">
+          <div>
+            <h3>Education</h3>
+            <dl>
+              <div class="cv-row"><dt>2025&ndash;2031</dt><dd>Rice University School of Architecture<small>Candidate for B.A. in Architecture (2029) and B.Arch (2031). GPA 3.94</small></dd></div>
+            </dl>
+          </div>
+          <div>
+            <h3>Experience</h3>
+            <dl>
+              <div class="cv-row"><dt>2026&ndash;present</dt><dd>Graphics Lead, Rice Design Board<small>Flyers, social media, design workshops and the annual Rice Design-a-Thon</small></dd></div>
+              <div class="cv-row"><dt>2026&ndash;present</dt><dd>Archi Market Coordinator and Studio Representative, Rice Architecture Society<small>Vendors, logistics, promotional graphics and studio advocacy</small></dd></div>
+              <div class="cv-row"><dt>2025&ndash;present</dt><dd>Design and Illustration Staff, The Thresher<small>Print and digital layout, editorial illustration</small></dd></div>
+              <div class="cv-row"><dt>2022&ndash;2025</dt><dd>Classroom Volunteer, Umbrella Arts Center<small>Painting, drawing and woodworking classes for children; 150+ hours</small></dd></div>
+            </dl>
+          </div>
+          <div>
+            <h3>Awards</h3>
+            <ul>
+              <li>Herman F. Lloyd Scholarship <small>Rice University</small></li>
+              <li>Jay &amp; Fon McLure Scholarship <small>Rice University</small></li>
+              <li>Scholastic Art &amp; Writing Awards <small>Gold Key 2024, Silver Key 2022, three Honorable Mentions</small></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Skills</h3>
+            <dl>
+              <div class="cv-row"><dt>Modeling</dt><dd>Rhino, Grasshopper, AutoCAD, Revit, SketchUp</dd></div>
+              <div class="cv-row"><dt>Graphics</dt><dd>Photoshop, Illustrator, InDesign, Lightroom</dd></div>
+              <div class="cv-row"><dt>Fabrication</dt><dd>Laser cutting, 3D printing, model making, hand drafting</dd></div>
+              <div class="cv-row"><dt>Languages</dt><dd>French, Vietnamese (conversational)</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function projectView(p) {
+  const i = PROJECTS.indexOf(p);
+  const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
+  const next = PROJECTS[(i + 1) % PROJECTS.length];
+  const facts = Object.entries(p.facts).filter(([, v]) => v !== "None");
+  const cells = [
+    ...facts.map(([k, v]) => `<div class="tb-cell${k === "Site" || k === "Media" ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`),
+    `<div class="tb-cell"><span class="tb-label">Drawn by</span><span class="tb-value">B. Nguyen</span></div>`,
+    `<div class="tb-cell"><span class="tb-label">Sheet</span><span class="tb-value">${pad(i + 1)} of ${pad(PROJECTS.length)}</span></div>`
+  ];
+  // Put wide cells first so the two-column cells pair up underneath.
+  cells.sort((a, b) => (b.includes(" wide") ? 1 : 0) - (a.includes(" wide") ? 1 : 0));
+
+  const blocks = p.blocks.map((b, n) => {
+    if (b.text) return textBlock(b.text);
+    if (b.full) return `<div class="b-full">${fig(b.full, "100vw", n === 0)}</div>`;
+    if (b.medium) return `<div class="b-medium">${fig(b.medium, "(max-width: 860px) 100vw, 66vw")}</div>`;
+    if (b.pair) return `<div class="b-pair">${b.pair.map(f => fig(f, "(max-width: 520px) 100vw, 50vw")).join("")}</div>`;
+    if (b.trio) return `<div class="b-trio">${b.trio.map(f => fig(f, "(max-width: 520px) 100vw, 33vw")).join("")}</div>`;
+    if (b.quad) return `<div class="b-quad">${b.quad.map(f => fig(f, "(max-width: 860px) 50vw, 25vw")).join("")}</div>`;
+    if (b.split) return `<div class="b-split">${fig(b.split[0], "(max-width: 860px) 100vw, 50vw", n === 0)}${textBlock(b.split[1])}</div>`;
+    return "";
+  }).join("");
+
+  return `
+  <article class="wrap project">
+    <a class="back" href="#architecture">&larr; All projects</a>
+    <header class="grid p-head">
+      <div class="p-title">
+        <span class="p-num">${pad(i + 1)}</span>
+        <h1>${esc(p.title)}</h1>
+        <p class="p-intro">${esc(p.intro)}</p>
+      </div>
+      <div class="titleblock" aria-label="Project information">${cells.join("")}</div>
+    </header>
+    <div class="grid blocks">${blocks}</div>
+    <nav class="p-nav" aria-label="More projects">
+      <a href="#${prev.slug}"><span>Previous</span><strong>${esc(prev.title)}</strong></a>
+      <a href="#${next.slug}"><span>Next</span><strong>${esc(next.title)}</strong></a>
+    </nav>
+  </article>`;
+}
+
+/* ---------- Routing (plain #name hashes) ---------- */
+let current = null;
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  const p = PROJECTS.find(x => x.slug === h);
+  const view = p ? "p:" + p.slug : "home";
+  if (view !== current) {
+    app.innerHTML = p ? projectView(p) : homeView();
+    document.title = p ? `${p.title} | Brandon Nguyen` : "Brandon Nguyen";
+    current = view;
+    bindCopy();
+  }
+  document.querySelectorAll("[data-nav]").forEach(a => a.setAttribute("aria-current", String(!p && a.dataset.nav === h)));
+  if (p) { window.scrollTo(0, 0); return; }
+  const target = h && document.getElementById(h);
+  if (target) {
+    const offset = document.querySelector(".mast").offsetHeight;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset + 1 });
+  } else if (!h) window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+
+/* ---------- Copy email ---------- */
+function bindCopy() {
+  const btn = document.getElementById("copy-email");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const text = "bn38@rice.edu";
+    const done = () => { btn.textContent = "Copied"; setTimeout(() => (btn.textContent = "Copy"), 1600); };
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById("email"));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected";
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+}
+
+/* ---------- Lightbox ---------- */
+const lb = document.getElementById("lightbox"), lbImg = document.getElementById("lb-img"), lbCap = document.getElementById("lb-cap");
+let lastFocus = null;
+app.addEventListener("click", e => {
+  const b = e.target.closest("button[data-full]");
+  if (!b) return;
+  lastFocus = b;
+  lbImg.src = b.dataset.full; lbImg.alt = b.dataset.cap; lbCap.textContent = b.dataset.cap;
+  lb.hidden = false; document.body.style.overflow = "hidden";
+  document.getElementById("lb-close").focus();
+});
+function closeLb() { lb.hidden = true; lbImg.removeAttribute("src"); document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+lb.addEventListener("click", closeLb);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+</script>
+</body>
+</html>
