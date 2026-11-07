@@ -181,6 +181,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .b-medium { grid-column: 3 / span 8; }
 .b-pair, .b-trio, .b-quad { grid-column: 1 / -1; display: grid; gap: clamp(12px, 2vw, 28px); align-items: start; }
 .b-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.b-pair.b-center { grid-column: 3 / span 8; }
 .b-trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .b-quad { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .b-eq { grid-column: 1 / -1; display: flex; gap: clamp(12px, 2vw, 28px); align-items: flex-start; }
@@ -211,6 +212,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 }
 
 @media (max-width: 860px) {
+  .b-pair.b-center { grid-column: 1 / -1; }
   .hero-text, .hero-figure, .bio, .cv, .p-title, .titleblock, .b-text, .b-medium { grid-column: 1 / -1; }
   .hero-figure { order: -1; }
   .projects { display: flex; flex-direction: column; gap: 48px; }
@@ -284,8 +286,8 @@ const PROJECTS = [
     blocks: [
       { split: [["totem-hero", "Final model"], ["This project explores the aggregation of a single base unit, composed of three intersecting triangular prisms, through a dual system of joinery.",
         "The form charts a vertical transition in structural logic, shifting from a heavy, orthogonally interlocked base to a delicate, surface-resting condition at the apex. This gradual release of joint rigidity results in a progressively lighter, expanding spatial canopy."]] },
-      { row: [["totem-unit", "Base unit and aggregation"], ["totem-plan-section", "Top: plan, cut at 1'-0\". Bottom: section."]] },
-      { row: [["totem-detail", "Detail of the upper canopy"], ["totem-color", "Study photograph"]] }
+      { cpair: [["totem-unit", "Base unit and aggregation"], ["totem-plan-section", "Top: plan, cut at 1'-0\". Bottom: section."]] },
+      { cpair: [["totem-detail", "Detail of the upper canopy"], ["totem-color", "Study photograph"]] }
     ]
   },
   {
@@ -363,7 +365,7 @@ const OTHER = [
 
 /* ---------- Rendering ---------- */
 /* Width / height of each image, used to give photos in the same row the same height. */
-const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.508, "menil-circulation": 0.8, "menil-hero": 1.011, "menil-hilltop-plan": 0.982, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 1.087, "menil-section-a": 1.461, "menil-section-b": 1.541, "menil-site-plan": 1.0, "menil-transformations": 0.48, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.006, "mfah-hero": 1.576, "mfah-plan-12": 0.75, "mfah-section": 2.128, "mfah-site-plan": 0.742, "totem-color": 0.546, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.77, "totem-unit": 0.821};
+const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.508, "menil-circulation": 0.8, "menil-hero": 1.011, "menil-hilltop-plan": 0.982, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 1.087, "menil-section-a": 1.461, "menil-section-b": 1.541, "menil-site-plan": 1.0, "menil-transformations": 0.48, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.006, "mfah-hero": 1.576, "mfah-plan-12": 0.75, "mfah-section": 2.128, "mfah-site-plan": 0.742, "totem-color": 0.546, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.77, "totem-unit": 0.621};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
@@ -492,6 +494,7 @@ function projectView(p) {
     if (b.full) return `<div class="b-full">${fig(b.full, "100vw", n === 0)}</div>`;
     if (b.medium) return `<div class="b-medium">${fig(b.medium, "(max-width: 860px) 100vw, 66vw")}</div>`;
     if (b.pair) return `<div class="b-pair">${b.pair.map(f => fig(f, "(max-width: 520px) 100vw, 50vw")).join("")}</div>`;
+    if (b.cpair) return `<div class="b-pair b-center">${b.cpair.map(f => fig(f, "(max-width: 520px) 100vw, 34vw")).join("")}</div>`;
     if (b.trio) return `<div class="b-trio">${b.trio.map(f => fig(f, "(max-width: 520px) 100vw, 33vw")).join("")}</div>`;
     if (b.quad) return `<div class="b-quad">${b.quad.map(f => fig(f, "(max-width: 860px) 50vw, 25vw")).join("")}</div>`;
     if (b.row) {
