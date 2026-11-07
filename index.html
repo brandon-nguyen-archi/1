@@ -130,6 +130,11 @@ p { margin: 0; }
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .contact-row a { overflow-wrap: anywhere; }
 .contact-label { color: var(--muted); font-size: var(--step--1); width: 5.5em; }
+.downloads { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.dl { display: inline-flex; align-items: baseline; gap: 10px; padding: 10px 16px; border: 1px solid var(--ink); text-decoration: none; }
+.dl span { color: var(--muted); font-size: var(--step--1); }
+.dl:hover { background: var(--ink); color: var(--paper); }
+.dl:hover span { color: inherit; }
 .copy-btn {
   font: inherit; font-size: var(--step--1); color: var(--muted); background: none;
   border: 1px solid var(--rule); padding: 2px 10px; cursor: pointer;
@@ -178,6 +183,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .b-pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .b-trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .b-quad { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.b-eq { grid-column: 1 / -1; display: flex; gap: clamp(12px, 2vw, 28px); align-items: flex-start; }
+.eq-item { min-width: 0; }
+.eq-item.stack { display: flex; flex-direction: column; gap: clamp(12px, 2vw, 28px); }
 .b-split { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(12px, 2vw, 28px); row-gap: 28px; align-items: center; }
 .b-split .fig { grid-column: 1 / span 6; }
 .b-split .b-text { grid-column: 8 / span 5; }
@@ -214,6 +222,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .b-trio .fig:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 @media (max-width: 520px) {
+  .b-eq { flex-direction: column; }
+  .b-eq .eq-item { flex: none !important; width: 100%; }
   .b-pair, .b-trio { grid-template-columns: minmax(0, 1fr); }
   .b-trio .fig:last-child:nth-child(odd) { grid-column: auto; }
   .cv-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -274,8 +284,8 @@ const PROJECTS = [
     blocks: [
       { split: [["totem-hero", "Final model"], ["This project explores the aggregation of a single base unit, composed of three intersecting triangular prisms, through a dual system of joinery.",
         "The form charts a vertical transition in structural logic, shifting from a heavy, orthogonally interlocked base to a delicate, surface-resting condition at the apex. This gradual release of joint rigidity results in a progressively lighter, expanding spatial canopy."]] },
-      { pair: [["totem-unit", "Base unit and aggregation"], ["totem-plan-section", "Top: plan, cut at 1'-0\". Bottom: section."]] },
-      { pair: [["totem-detail", "Detail of the upper canopy"], ["totem-color", "Study photograph"]] }
+      { row: [["totem-unit", "Base unit and aggregation"], ["totem-plan-section", "Top: plan, cut at 1'-0\". Bottom: section."]] },
+      { row: [["totem-detail", "Detail of the upper canopy"], ["totem-color", "Study photograph"]] }
     ]
   },
   {
@@ -318,9 +328,9 @@ const PROJECTS = [
     intro: "A precedent study of Arata Isozaki's Hayashi House, focused on the contrast between a winding, flexible, modular interior and the rigid, cave-like exterior that encases it.",
     blocks: [
       { split: [["int-hero", "Final model, acrylic and plaster"], ["To analyze this juxtaposition, I produced a series of drawings: an axonometric showing how branching circulation creates an expansive interior, a layered section cut showing spatial variation beneath consistent vaulted ceilings, and a distorted plan mapping how natural light pierces the solid exterior through clerestories and skylights."]] },
-      { trio: [["int-axon", "Axonometric: branching circulation"], ["int-sections", "Layered section cuts"], ["int-light-plan", "Light-distorted plan"]] },
+      { row: [["int-axon", "Axonometric: branching circulation"], ["int-sections", "Layered section cuts"], ["int-light-plan", "Light-distorted plan"]] },
       { text: ["I then brought these ideas together in a final acrylic and plaster model that captures the project's modularity, vaulted forms and play of light."] },
-      { pair: [["int-model-1", "Final model"], ["int-model-2", "Final model, aerial view"]] }
+      { row: [["int-model-1", "Final model"], ["int-model-2", "Final model, aerial view"]] }
     ]
   },
   {
@@ -331,13 +341,12 @@ const PROJECTS = [
     blocks: [
       { full: ["menil-hero", "Rendering"] },
       { text: ["The core concept is anchored by a grid mapped directly from the circulation paths of the existing campus buildings. By overlapping these established pedestrian flows, the extension integrates into the site and keeps movement easy and accessible for visitors."] },
-      { pair: [["menil-hilltop-plan", "Hilltop plan, 1/8\" = 1'-0\""], ["menil-plan", "Plan, 1/8\" = 1'-0\""]] },
+      { row: [["menil-hilltop-plan", "Hilltop plan, 1/8\" = 1'-0\""], ["menil-plan", "Plan, 1/8\" = 1'-0\""]] },
       { text: ["The shape language responds to the concentric squares on the roofs of the adjacent Drawing Institute and Cy Twombly Gallery. Circular forms modify that motif, producing a curvilinear shape that softens the rigidity of the site."] },
       { medium: ["menil-site-plan", "Site plan, 1/16\" = 1'-0\""] },
-      { full: ["menil-section-a", "Section A, 1/8\" = 1'-0\""] },
-      { full: ["menil-section-b", "Section B, 1/8\" = 1'-0\""] },
+      { row: [["menil-section-a", "Section A, 1/8\" = 1'-0\""], ["menil-section-b", "Section B, 1/8\" = 1'-0\""]] },
       { text: ["The curvilinear motif flows down into the structural grid, creating a biomorphic interior. Above, the landscape sweeps over the structural bones of the building, maximizing green space and letting the rooflines and the rolling terrain mirror one another."] },
-      { trio: [["menil-transformations", "Transformations diagram"], ["menil-axon", "Axonometric diagram"], ["menil-circulation", "Circulation diagram"]] },
+      { row: [["menil-transformations", "Transformations diagram"], [["menil-axon", "Axonometric diagram"], ["menil-circulation", "Circulation diagram"]]] },
       { text: ["The pavilion takes a freeform approach to its program: three indoor rooms and one outdoor gathering area, an arrangement that can adapt to whatever the campus needs.",
                "These connected areas offer varying exposure to nature, accommodating both large public gatherings and intimate, private moments."] },
       { quad: [["menil-model-1", "Model detail"], ["menil-model-2", "Model, aerial view"], ["menil-model-3", "Model"], ["menil-model-4", "Model, plan view"]] }
@@ -353,6 +362,8 @@ const OTHER = [
 ];
 
 /* ---------- Rendering ---------- */
+/* Width / height of each image, used to give photos in the same row the same height. */
+const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.508, "menil-circulation": 0.8, "menil-hero": 1.011, "menil-hilltop-plan": 0.982, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 1.087, "menil-section-a": 1.461, "menil-section-b": 1.541, "menil-site-plan": 1.0, "menil-transformations": 0.48, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.006, "mfah-hero": 1.576, "mfah-plan-12": 0.75, "mfah-section": 2.128, "mfah-site-plan": 0.742, "totem-color": 0.546, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.77, "totem-unit": 0.821};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
@@ -419,6 +430,9 @@ function homeView() {
             <div class="contact-row"><span class="contact-label">Personal</span><a href="mailto:brandon.nguyen1249@gmail.com">brandon.nguyen1249@gmail.com</a><button class="copy-btn" type="button" data-copy="brandon.nguyen1249@gmail.com">Copy</button></div>
             <div class="contact-row"><span class="contact-label">LinkedIn</span><a href="https://www.linkedin.com/in/brandon-nguyen-archi/" target="_blank" rel="noopener">brandon-nguyen-archi</a></div>
           </div>
+          <div class="downloads">
+            <a class="dl" href="files/Brandon-Nguyen-Portfolio.pdf" download>Download portfolio <span>PDF, 27 MB</span></a>
+          </div>
         </div>
         <div class="cv">
           <div>
@@ -466,11 +480,10 @@ function projectView(p) {
   const f = p.facts;
   const cell = (k, v, wide) => `<div class="tb-cell${wide ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`;
   const instrKey = f.Instructors ? "Instructors" : "Instructor";
-  // Media spans the full width; the rest pair up, with the instructor box in the bottom-right corner.
-  const half = [cell("Course", f.Course), cell("Term", f.Term), cell("Type", f.Type)];
-  if (f.Site && f.Site !== "None") half.push(cell("Site", f.Site));
-  if (half.length % 2 === 0) half.push(`<div class="tb-cell" aria-hidden="true"></div>`);
-  half.push(cell(instrKey, f[instrKey]));
+  // Media spans the full width; the rest pair up, with course and instructor side by side on the bottom row.
+  const half = [cell("Term", f.Term), cell("Type", f.Type)];
+  if (f.Site && f.Site !== "None") half.push(cell("Site", f.Site), `<div class="tb-cell" aria-hidden="true"></div>`);
+  half.push(cell("Course", f.Course), cell(instrKey, f[instrKey]));
   const cells = [cell("Media", f.Media, true), ...half];
 
   const blocks = p.blocks.map((b, n) => {
@@ -480,6 +493,17 @@ function projectView(p) {
     if (b.pair) return `<div class="b-pair">${b.pair.map(f => fig(f, "(max-width: 520px) 100vw, 50vw")).join("")}</div>`;
     if (b.trio) return `<div class="b-trio">${b.trio.map(f => fig(f, "(max-width: 520px) 100vw, 33vw")).join("")}</div>`;
     if (b.quad) return `<div class="b-quad">${b.quad.map(f => fig(f, "(max-width: 860px) 50vw, 25vw")).join("")}</div>`;
+    if (b.row) {
+      // A row item is either one figure or a column of figures stacked on top of each other.
+      const isStack = it => Array.isArray(it[0]);
+      const ratio = it => isStack(it) ? 1 / it.reduce((t, f) => t + 1 / (DIMS[f[0]] || 1), 0) : (DIMS[it[0]] || 1);
+      const total = b.row.reduce((t, it) => t + ratio(it), 0);
+      return `<div class="b-eq">${b.row.map(it => {
+        const r = ratio(it), sizes = `(max-width: 520px) 100vw, ${Math.ceil(100 * r / total)}vw`;
+        const inner = isStack(it) ? it.map(f => fig(f, sizes)).join("") : fig(it, sizes);
+        return `<div class="eq-item${isStack(it) ? " stack" : ""}" style="flex: ${r} 1 0">${inner}</div>`;
+      }).join("")}</div>`;
+    }
     if (b.split) return `<div class="b-split">${fig(b.split[0], "(max-width: 860px) 100vw, 50vw", n === 0)}${textBlock(b.split[1])}</div>`;
     return "";
   }).join("");
