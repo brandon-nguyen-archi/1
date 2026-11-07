@@ -218,6 +218,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   font: inherit; font-size: var(--step--1); background: none; border: 1px solid var(--rule); color: var(--ink); padding: 4px 12px; cursor: pointer;
 }
 
+/* Project pages are shown at 80% scale on larger screens (like zooming the browser out to 80%).
+   The header, footer and home page stay at full size; phones and tablets are unchanged. */
+@media (min-width: 861px) {
+  .project { zoom: 0.8; }
+}
 @media (max-width: 860px) {
   .b-pair.b-center { grid-column: 1 / -1; }
   .hero-text, .hero-figure, .bio, .cv, .p-title, .titleblock, .b-text, .b-medium { grid-column: 1 / -1; }
