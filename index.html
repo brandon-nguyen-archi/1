@@ -187,6 +187,13 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .b-eq { grid-column: 1 / -1; display: flex; gap: clamp(12px, 2vw, 28px); align-items: flex-start; }
 .eq-item { min-width: 0; }
 .eq-item.stack { display: flex; flex-direction: column; gap: clamp(12px, 2vw, 28px); }
+/* Fill rows: the single image stretches to the exact height of the stacked column beside it,
+   trimming a little of its own white margin so the two sides end on the same line. */
+.b-eq.fill { align-items: stretch; }
+.b-eq.fill > .eq-item:not(.stack) { display: flex; }
+.b-eq.fill > .eq-item:not(.stack) > .fig { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.b-eq.fill > .eq-item:not(.stack) > .fig > button { flex: 1; position: relative; min-height: 0; background: #fff; }
+.b-eq.fill > .eq-item:not(.stack) > .fig > button img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .b-split { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(12px, 2vw, 28px); row-gap: 28px; align-items: center; }
 .b-split .fig { grid-column: 1 / span 6; }
 .b-split .b-text { grid-column: 8 / span 5; }
@@ -226,6 +233,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 @media (max-width: 520px) {
   .b-eq { flex-direction: column; }
   .b-eq .eq-item { flex: none !important; width: 100%; }
+  .b-eq.fill > .eq-item:not(.stack) > .fig > button { position: static; }
+  .b-eq.fill > .eq-item:not(.stack) > .fig > button img { position: static; height: auto; }
   .b-pair, .b-trio { grid-template-columns: minmax(0, 1fr); }
   .b-trio .fig:last-child:nth-child(odd) { grid-column: auto; }
   .cv-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -343,12 +352,12 @@ const PROJECTS = [
     blocks: [
       { full: ["menil-hero", "Rendering"] },
       { text: ["The core concept is anchored by a grid mapped directly from the circulation paths of the existing campus buildings. By overlapping these established pedestrian flows, the extension integrates into the site and keeps movement easy and accessible for visitors."] },
-      { row: [["menil-hilltop-plan", "Hilltop plan, 1/8\" = 1'-0\""], ["menil-plan", "Plan, 1/8\" = 1'-0\""]] },
+      { row: [["menil-hilltop-plan", "Hill plan, 1/8\" = 1'-0\""], ["menil-plan", "Cut plan at 4'-0\", 1/8\" = 1'-0\""]] },
       { text: ["The shape language responds to the concentric squares on the roofs of the adjacent Drawing Institute and Cy Twombly Gallery. Circular forms modify that motif, producing a curvilinear shape that softens the rigidity of the site."] },
       { medium: ["menil-site-plan", "Site plan, 1/16\" = 1'-0\""] },
       { row: [["menil-section-a", "Section A, 1/8\" = 1'-0\""], ["menil-section-b", "Section B, 1/8\" = 1'-0\""]] },
       { text: ["The curvilinear motif flows down into the structural grid, creating a biomorphic interior. Above, the landscape sweeps over the structural bones of the building, maximizing green space and letting the rooflines and the rolling terrain mirror one another."] },
-      { row: [["menil-transformations", "Transformations diagram"], [["menil-axon", "Axonometric diagram"], ["menil-circulation", "Circulation diagram"]]] },
+      { fill: true, row: [["menil-transformations", "Transformations diagram"], [["menil-axon", "Axonometric diagram"], ["menil-circulation", "Circulation diagram"]]] },
       { text: ["The pavilion takes a freeform approach to its program: three indoor rooms and one outdoor gathering area, an arrangement that can adapt to whatever the campus needs.",
                "These connected areas offer varying exposure to nature, accommodating both large public gatherings and intimate, private moments."] },
       { quad: [["menil-model-1", "Model detail"], ["menil-model-2", "Model, aerial view"], ["menil-model-3", "Model"], ["menil-model-4", "Model, plan view"]] }
@@ -365,7 +374,7 @@ const OTHER = [
 
 /* ---------- Rendering ---------- */
 /* Width / height of each image, used to give photos in the same row the same height. */
-const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.508, "menil-circulation": 0.8, "menil-hero": 1.011, "menil-hilltop-plan": 0.982, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 1.087, "menil-section-a": 1.461, "menil-section-b": 1.541, "menil-site-plan": 1.0, "menil-transformations": 0.48, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.0, "mfah-hero": 1.5, "mfah-plan-12": 0.816, "mfah-section": 1.518, "mfah-site-plan": 0.793, "totem-color": 0.71, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.621, "totem-unit": 0.621};
+const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.197, "menil-circulation": 0.916, "menil-hero": 1.011, "menil-hilltop-plan": 1.061, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 0.994, "menil-section-a": 1.78, "menil-section-b": 1.674, "menil-site-plan": 1.049, "menil-transformations": 0.8, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.0, "mfah-hero": 1.5, "mfah-plan-12": 0.816, "mfah-section": 1.518, "mfah-site-plan": 0.793, "totem-color": 0.71, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.621, "totem-unit": 0.621};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
@@ -502,7 +511,7 @@ function projectView(p) {
       const isStack = it => Array.isArray(it[0]);
       const ratio = it => isStack(it) ? 1 / it.reduce((t, f) => t + 1 / (DIMS[f[0]] || 1), 0) : (DIMS[it[0]] || 1);
       const total = b.row.reduce((t, it) => t + ratio(it), 0);
-      return `<div class="b-eq">${b.row.map(it => {
+      return `<div class="b-eq${b.fill ? " fill" : ""}">${b.row.map(it => {
         const r = ratio(it), sizes = `(max-width: 520px) 100vw, ${Math.ceil(100 * r / total)}vw`;
         const inner = isStack(it) ? it.map(f => fig(f, sizes)).join("") : fig(it, sizes);
         return `<div class="eq-item${isStack(it) ? " stack" : ""}" style="flex: ${r} 1 0">${inner}</div>`;
