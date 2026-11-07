@@ -388,7 +388,7 @@ const PROJECTS = [
 
 const OTHER = [
   { title: "Rice Design Board", text: "Flyers, social posts and workshops as Graphics Lead.", slug: "rice-design", cover: "rd-design-a-thon" },
-  { title: "The Thresher", text: "Layout and illustration for Rice's student newspaper.", slug: "thresher", cover: "thr-sa-election" },
+  { title: "The Thresher", text: "Layout and illustration for Rice's student newspaper.", slug: "thresher", cover: "thr-dear-future-owls" },
   { title: "Prints", text: "Personal printmaking and graphic work." },
   { title: "Fine Art", text: "Painting, drawing and photography." }
 ];
@@ -403,19 +403,20 @@ const GALLERIES = [
 ];
 
 GALLERIES.push({
-  slug: "thresher", title: "The Thresher", fill: true,
+  slug: "thresher", title: "The Thresher", fullRows: [0],
   intro: "Page layouts for The Thresher, Rice's student newspaper, including the Beer Bike spectator guide and the Backpage satire section.",
   rows: [
     [["thr-beer-bike", "Beer Bike 2026 spectator guide, two-page spread"]],
-    [["thr-chaosen", "Backpage: Words from the Chaosen Ones"], ["thr-sa-election", "Backpage: S.A. Election Rundown"], ["thr-horoscope", "Weekly Horoscope"], ["thr-spring-bingo", "Backpage: Spring Break Bingo"]]
+    [["thr-chaosen", "Backpage: Words from the Chaosen Ones"], ["thr-sa-election", "Backpage: S.A. Election Rundown"], ["thr-horoscope", "Weekly Horoscope"]],
+    [["thr-spring-bingo", "Backpage: Spring Break Bingo"], ["thr-inferno", "Backpage: Backpage's Inferno"], ["thr-dear-future-owls", "Backpage: Dear Future Rice Owls"]]
   ]
 });
 
 /* ---------- Rendering ---------- */
 /* Width / height of each image, used to give photos in the same row the same height. */
 /* Version stamp for each image: changes whenever the file changes, so browsers never show an old copy. */
-const VER = {"cover-totem-bw": "48537d75", "ext-composite-map": "68ab5634", "ext-hero": "6f1fc45c", "ext-line-1": "a2a90f1b", "ext-line-10": "c84da445", "ext-line-1000": "27a81b20", "ext-materials": "30ad8b8e", "ext-night": "faf32e3e", "ext-radial": "590df0a2", "ga-drawing-series": "f91880db", "ga-final-1": "09a7f45f", "ga-final-2": "66c22e1e", "ga-hero": "54fd23a5", "ga-model-series": "0a72b2a1", "ga-section-1": "2f350d43", "ga-section-2": "afc667f3", "int-axon": "2ac6a1e3", "int-hero": "dfdd2441", "int-light-plan": "b38be406", "int-model-1": "2a7ce5f2", "int-model-2": "708e6b99", "int-sections": "e8c22f73", "menil-axon": "2f6b10c1", "menil-circulation": "e6fc9e55", "menil-hero": "5f6a4c94", "menil-hilltop-plan": "8b4d6971", "menil-model-1": "96a0ca30", "menil-model-2": "bf9ecd9e", "menil-model-3": "11991dcf", "menil-model-4": "55ca1836", "menil-plan": "c77ab38e", "menil-section-a": "2fd18861", "menil-section-b": "96eb3b1e", "menil-site-plan": "a700ab07", "menil-transformations": "da0919b6", "mfah-aerial": "d153a139", "mfah-axon": "cfc6486b", "mfah-cantilever": "26e324f9", "mfah-hero": "a5e3f8cc", "mfah-plan-12": "ee211229", "mfah-section": "edad7a34", "mfah-site-plan": "efb69afc", "rd-collective": "00207cd5", "rd-design-a-thon": "77629064", "rd-intro-to-figma": "562c9c3d", "rd-poster-workshop": "258061fb", "rd-template-blue": "503b6639", "rd-template-yellow": "319695e0", "rd-tote-pumpkin": "49c4ad01", "thr-beer-bike": "cba1ed43", "thr-chaosen": "5836bec1", "thr-horoscope": "9ac1d9f1", "thr-sa-election": "d76401ed", "thr-spring-bingo": "d9ab55cd", "totem-color": "8d7253c9", "totem-detail": "245af071", "totem-hero": "8af32ec0", "totem-plan-section": "da6f7f04", "totem-unit": "8989e4fa"};
-const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.543, "menil-circulation": 0.812, "menil-hero": 1.011, "menil-hilltop-plan": 1.061, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 0.994, "menil-section-a": 1.78, "menil-section-b": 1.674, "menil-site-plan": 1.049, "menil-transformations": 0.541, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.0, "mfah-hero": 1.5, "mfah-plan-12": 0.816, "mfah-section": 1.518, "mfah-site-plan": 0.793, "rd-collective": 0.8, "rd-design-a-thon": 0.8, "rd-intro-to-figma": 0.8, "rd-poster-workshop": 0.8, "rd-template-blue": 0.707, "rd-template-yellow": 0.707, "rd-tote-pumpkin": 0.801, "thr-beer-bike": 1.282, "thr-chaosen": 0.782, "thr-horoscope": 0.781, "thr-sa-election": 0.633, "thr-spring-bingo": 0.753, "totem-color": 0.71, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.621, "totem-unit": 0.621};
+const VER = {"cover-totem-bw": "48537d75", "ext-composite-map": "68ab5634", "ext-hero": "6f1fc45c", "ext-line-1": "a2a90f1b", "ext-line-10": "c84da445", "ext-line-1000": "27a81b20", "ext-materials": "30ad8b8e", "ext-night": "faf32e3e", "ext-radial": "590df0a2", "ga-drawing-series": "f91880db", "ga-final-1": "09a7f45f", "ga-final-2": "66c22e1e", "ga-hero": "54fd23a5", "ga-model-series": "0a72b2a1", "ga-section-1": "2f350d43", "ga-section-2": "afc667f3", "int-axon": "2ac6a1e3", "int-hero": "dfdd2441", "int-light-plan": "b38be406", "int-model-1": "2a7ce5f2", "int-model-2": "708e6b99", "int-sections": "e8c22f73", "menil-axon": "2f6b10c1", "menil-circulation": "e6fc9e55", "menil-hero": "5f6a4c94", "menil-hilltop-plan": "8b4d6971", "menil-model-1": "96a0ca30", "menil-model-2": "bf9ecd9e", "menil-model-3": "11991dcf", "menil-model-4": "55ca1836", "menil-plan": "c77ab38e", "menil-section-a": "2fd18861", "menil-section-b": "96eb3b1e", "menil-site-plan": "a700ab07", "menil-transformations": "da0919b6", "mfah-aerial": "d153a139", "mfah-axon": "cfc6486b", "mfah-cantilever": "26e324f9", "mfah-hero": "a5e3f8cc", "mfah-plan-12": "ee211229", "mfah-section": "edad7a34", "mfah-site-plan": "efb69afc", "rd-collective": "00207cd5", "rd-design-a-thon": "77629064", "rd-intro-to-figma": "562c9c3d", "rd-poster-workshop": "258061fb", "rd-template-blue": "503b6639", "rd-template-yellow": "319695e0", "rd-tote-pumpkin": "49c4ad01", "thr-beer-bike": "cba1ed43", "thr-chaosen": "5836bec1", "thr-dear-future-owls": "f50c97e1", "thr-horoscope": "9ac1d9f1", "thr-inferno": "3919a5e2", "thr-sa-election": "d76401ed", "thr-spring-bingo": "d9ab55cd", "totem-color": "8d7253c9", "totem-detail": "245af071", "totem-hero": "8af32ec0", "totem-plan-section": "da6f7f04", "totem-unit": "8989e4fa"};
+const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.543, "menil-circulation": 0.812, "menil-hero": 1.011, "menil-hilltop-plan": 1.061, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 0.994, "menil-section-a": 1.78, "menil-section-b": 1.674, "menil-site-plan": 1.049, "menil-transformations": 0.541, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.0, "mfah-hero": 1.5, "mfah-plan-12": 0.816, "mfah-section": 1.518, "mfah-site-plan": 0.793, "rd-collective": 0.8, "rd-design-a-thon": 0.8, "rd-intro-to-figma": 0.8, "rd-poster-workshop": 0.8, "rd-template-blue": 0.707, "rd-template-yellow": 0.707, "rd-tote-pumpkin": 0.801, "thr-beer-bike": 1.282, "thr-chaosen": 0.782, "thr-dear-future-owls": 0.632, "thr-horoscope": 0.781, "thr-inferno": 0.632, "thr-sa-election": 0.633, "thr-spring-bingo": 0.753, "totem-color": 0.71, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.621, "totem-unit": 0.621};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
@@ -589,10 +590,13 @@ function projectView(p) {
 
 function galleryView(g) {
   const rowSum = r => r.reduce((t, [n]) => t + (DIMS[n] || 1), 0);
-  const allMax = Math.max(...g.rows.map(rowSum));
-  const allCount = Math.max(...g.rows.map(r => r.length));
-  // fill: every row spans the full width; otherwise all rows share one height and shorter rows are centered.
-  const rows = g.rows.map(r => { const maxSum = g.fill ? rowSum(r) : allMax, maxCount = g.fill ? r.length : allCount; return `<div class="g-row">${r.map(([n, alt]) => {
+  // Rows listed in fullRows span the full width on their own. All other rows share one height,
+  // set by the widest of them, and narrower rows are centered.
+  const full = i => (g.fullRows || []).includes(i);
+  const shared = g.rows.filter((r, i) => !full(i));
+  const allMax = Math.max(...shared.map(rowSum), 0);
+  const allCount = Math.max(...shared.map(r => r.length), 0);
+  const rows = g.rows.map((r, i) => { const maxSum = full(i) ? rowSum(r) : allMax, maxCount = full(i) ? r.length : allCount; return `<div class="g-row">${r.map(([n, alt]) => {
     const w = `calc((100% - ${maxCount - 1} * var(--g-gap)) * ${(DIMS[n] || 1) / maxSum})`;
     return `<button type="button" class="g-item" style="width: ${w}" data-full="img/${n}.jpg${VER[n] ? `?v=${VER[n]}` : ""}" data-cap="" aria-label="Enlarge: ${esc(alt)}">${img(n, alt, "(max-width: 520px) 100vw, 25vw")}</button>`;
   }).join("")}</div>`; }).join("");
