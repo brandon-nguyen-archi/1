@@ -94,6 +94,7 @@ p { margin: 0; }
 .card:nth-child(4n+4) { grid-column: 8 / span 5; margin-top: clamp(32px, 8vw, 120px); }
 .card .frame { overflow: hidden; background: var(--plate); }
 .card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.6s ease; }
+.card.portrait img { aspect-ratio: 4 / 5; }
 .card:hover img { transform: scale(1.025); }
 .card-title { display: flex; gap: 14px; align-items: baseline; }
 .card-num { font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -260,7 +261,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: "totem", title: "Totem", cover: "totem-hero",
+    slug: "totem", title: "Totem", cover: "totem-hero", portrait: true,
     sub: "Aggregation of a single wooden unit",
     facts: { Course: "ARCH 101", Instructors: "Nathan Friedman, Tung Nguyen", Type: "Aggregation study", Term: "Fall 2025", Media: "Wood, digital drawings", Site: "None" },
     intro: "Totem explores geometric and systematic evolution, generating an overall organization in which the whole is greater than the sum of its parts.",
@@ -305,7 +306,7 @@ const PROJECTS = [
     ]
   },
   {
-    slug: "internal-systems", title: "Internal Systems", cover: "int-hero",
+    slug: "internal-systems", title: "Internal Systems", cover: "int-hero", portrait: true,
     sub: "Precedent study of Arata Isozaki's Hayashi House",
     facts: { Course: "ARCH 102", Instructor: "Troy Schaum", Type: "Precedent study", Term: "Spring 2026", Media: "Acrylic and plaster model, digital drawings", Site: "Hayashi House, Arata Isozaki" },
     intro: "A precedent study of Arata Isozaki's Hayashi House, focused on the contrast between a winding, flexible, modular interior and the rigid, cave-like exterior that encases it.",
@@ -360,7 +361,7 @@ const textBlock = paras => `<div class="b-text">${paras.map(p => `<p>${esc(p)}</
 
 function homeView() {
   const cards = PROJECTS.map((p, i) => `
-    <a class="card" href="#${p.slug}">
+    <a class="card${p.portrait ? " portrait" : ""}" href="#${p.slug}">
       <div class="frame">${img(p.cover, p.title, "(max-width: 860px) 100vw, 50vw", i < 2)}</div>
       <div class="card-title"><span class="card-num">${pad(i + 1)}</span><h3 class="card-name">${esc(p.title)}</h3></div>
       <p class="card-sub">${esc(p.sub)}</p>
