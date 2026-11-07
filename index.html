@@ -247,7 +247,7 @@ const PROJECTS = [
   {
     slug: "geometric-abstraction", title: "Geometric Abstraction", cover: "ga-hero",
     sub: "Formal study in paper models and graphite",
-    facts: { Type: "Formal study", Term: "Fall 2025", Media: "Paper models, graphite on paper", Site: "None" },
+    facts: { Course: "ARCH 101", Instructors: "Nathan Friedman, Tung Nguyen", Type: "Formal study", Term: "Fall 2025", Media: "Paper models, graphite on paper", Site: "None" },
     intro: "A series of physical models and drawings that grow in complexity over the length of the assignment.",
     blocks: [
       { full: ["ga-hero", "Final model"] },
@@ -263,7 +263,7 @@ const PROJECTS = [
   {
     slug: "totem", title: "Totem", cover: "totem-hero",
     sub: "Aggregation of a single wooden unit",
-    facts: { Type: "Aggregation study", Term: "Fall 2025", Media: "Wood, digital drawings", Site: "None" },
+    facts: { Course: "ARCH 101", Instructors: "Nathan Friedman, Tung Nguyen", Type: "Aggregation study", Term: "Fall 2025", Media: "Wood, digital drawings", Site: "None" },
     intro: "Totem explores geometric and systematic evolution, generating an overall organization in which the whole is greater than the sum of its parts.",
     blocks: [
       { split: [["totem-hero", "Final model"], ["This project explores the aggregation of a single base unit, composed of three intersecting triangular prisms, through a dual system of joinery.",
@@ -275,7 +275,7 @@ const PROJECTS = [
   {
     slug: "mfah-library", title: "MFAH Library", cover: "mfah-hero",
     sub: "A library for the Museum of Fine Arts, Houston",
-    facts: { Type: "Library", Term: "Fall 2025", Media: "Physical model, digital drawings", Site: "Museum of Fine Arts, Houston" },
+    facts: { Course: "ARCH 101", Instructors: "Nathan Friedman, Tung Nguyen", Type: "Library", Term: "Fall 2025", Media: "Physical model, digital drawings", Site: "Museum of Fine Arts, Houston" },
     intro: "An extension of the Museum of Fine Arts, Houston campus: a library on a vacant lot northeast of the Glassell School of Art, with an exhibition gallery, a fine art book collection and a children's area.",
     blocks: [
       { full: ["mfah-hero", "Physical model"] },
@@ -292,7 +292,7 @@ const PROJECTS = [
   {
     slug: "external-systems", title: "External Systems", cover: "ext-hero",
     sub: "Scalar mapping of Michael Heizer's 45, 90, 180",
-    facts: { Type: "Site analysis", Term: "Spring 2026", Media: "Photography, digital mapping", Site: "Engineering Quad, Rice University" },
+    facts: { Course: "ARCH 102", Instructor: "Troy Schaum", Type: "Site analysis", Term: "Spring 2026", Media: "Photography, digital mapping", Site: "Engineering Quad, Rice University" },
     intro: "An assignment on the qualities that shape building form, massing, surface and space, studied through Michael Heizer's sculpture series 45, 90, 180.",
     blocks: [
       { full: ["ext-hero", "Composite of one hundred radial photographs"] },
@@ -308,7 +308,7 @@ const PROJECTS = [
   {
     slug: "internal-systems", title: "Internal Systems", cover: "int-hero",
     sub: "Precedent study of Arata Isozaki's Hayashi House",
-    facts: { Type: "Precedent study", Term: "Spring 2026", Media: "Acrylic and plaster model, digital drawings", Site: "Hayashi House, Arata Isozaki" },
+    facts: { Course: "ARCH 102", Instructor: "Troy Schaum", Type: "Precedent study", Term: "Spring 2026", Media: "Acrylic and plaster model, digital drawings", Site: "Hayashi House, Arata Isozaki" },
     intro: "A precedent study of Arata Isozaki's Hayashi House, focused on the contrast between a winding, flexible, modular interior and the rigid, cave-like exterior that encases it.",
     blocks: [
       { split: [["int-hero", "Final model, acrylic and plaster"], ["To analyze this juxtaposition, I produced a series of drawings: an axonometric showing how branching circulation creates an expansive interior, a layered section cut showing spatial variation beneath consistent vaulted ceilings, and a distorted plan mapping how natural light pierces the solid exterior through clerestories and skylights."]] },
@@ -320,7 +320,7 @@ const PROJECTS = [
   {
     slug: "menil-extension", title: "Menil Extension", cover: "menil-hero",
     sub: "A landscape pavilion on the Menil campus",
-    facts: { Type: "Pavilion", Term: "Spring 2026", Media: "Physical models, digital drawings, rendering", Site: "The Menil Collection, Houston" },
+    facts: { Course: "ARCH 102", Instructor: "Troy Schaum", Type: "Pavilion", Term: "Spring 2026", Media: "Physical models, digital drawings, rendering", Site: "The Menil Collection, Houston" },
     intro: "An exploration of intersecting systems: a pavilion on the Menil campus that bridges the built environment and the surrounding landscape.",
     blocks: [
       { full: ["menil-hero", "Rendering"] },
@@ -456,8 +456,7 @@ function projectView(p) {
   const next = PROJECTS[(i + 1) % PROJECTS.length];
   const facts = Object.entries(p.facts).filter(([, v]) => v !== "None");
   const cells = [
-    ...facts.map(([k, v]) => `<div class="tb-cell${k === "Site" || k === "Media" ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`),
-    `<div class="tb-cell"><span class="tb-label">Drawn by</span><span class="tb-value">B. Nguyen</span></div>`,
+    ...facts.map(([k, v]) => `<div class="tb-cell${["Site", "Media", "Instructors", "Instructor"].includes(k) ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`),
     `<div class="tb-cell"><span class="tb-label">Sheet</span><span class="tb-value">${pad(i + 1)} of ${pad(PROJECTS.length)}</span></div>`
   ];
   // Put wide cells first so the two-column cells pair up underneath.
