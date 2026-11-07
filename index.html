@@ -296,11 +296,11 @@ const PROJECTS = [
     facts: { Course: "ARCH 101", Instructors: "Nathan Friedman, Tung Nguyen", Type: "Library", Term: "Fall 2025", Media: "Physical model, digital drawings", Site: "Museum of Fine Arts, Houston" },
     intro: "An extension of the Museum of Fine Arts, Houston campus: a library on a vacant lot northeast of the Glassell School of Art, with an exhibition gallery, a fine art book collection and a children's area.",
     blocks: [
-      { full: ["mfah-hero", "Physical model"] },
+      { full: ["mfah-hero", "Physical model, elevation view"] },
       { pair: [["mfah-aerial", "Model, aerial view"], ["mfah-cantilever", "The cantilevered public volume"]] },
       { text: ["The brief asked that the design take inspiration from Totem and Geometric Abstraction. The spatial sequence uses a series of irregular quadrilaterals derived directly from the geometry study to generate an interplay between solid mass and open void.",
                "The structural liberation of the ground plane is guided by precedents like Diller Scofidio + Renfro's ICA Boston and OMA's Milstein Hall."] },
-      { pair: [["mfah-plan-12", "Plan, cut at 12'"], ["mfah-site-plan", "Plan, cut at 24', with site"]] },
+      { row: [["mfah-plan-12", "Plan, cut at 12'"], ["mfah-site-plan", "Plan, cut at 24', with site"]] },
       { full: ["mfah-section", "Section"] },
       { text: ["The internal logic of the architecture relies on fracturing the footprint into distinct structures. This keeps the ground plane porous and introduces terraced outdoor platforms between the buildings.",
                "Subverting traditional programming, the spatial hierarchy makes the program increasingly public as one moves up through the building. This upward trajectory ends in the cantilevered volume: an expansive public space hovering above the site that acts as a social condenser while sheltering the pedestrian landscape below."] },
@@ -365,7 +365,7 @@ const OTHER = [
 
 /* ---------- Rendering ---------- */
 /* Width / height of each image, used to give photos in the same row the same height. */
-const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.508, "menil-circulation": 0.8, "menil-hero": 1.011, "menil-hilltop-plan": 0.982, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 1.087, "menil-section-a": 1.461, "menil-section-b": 1.541, "menil-site-plan": 1.0, "menil-transformations": 0.48, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.006, "mfah-hero": 1.576, "mfah-plan-12": 0.75, "mfah-section": 2.128, "mfah-site-plan": 0.742, "totem-color": 0.71, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.621, "totem-unit": 0.621};
+const DIMS = {"cover-totem-bw": 0.713, "ext-composite-map": 1.016, "ext-hero": 1.001, "ext-line-1": 1.0, "ext-line-10": 1.0, "ext-line-1000": 1.0, "ext-materials": 1.009, "ext-night": 1.007, "ext-radial": 1.001, "ga-drawing-series": 1.0, "ga-final-1": 1.0, "ga-final-2": 1.0, "ga-hero": 1.5, "ga-model-series": 1.0, "ga-section-1": 1.0, "ga-section-2": 1.0, "int-axon": 0.6, "int-hero": 0.716, "int-light-plan": 0.433, "int-model-1": 1.508, "int-model-2": 1.022, "int-sections": 0.517, "menil-axon": 1.508, "menil-circulation": 0.8, "menil-hero": 1.011, "menil-hilltop-plan": 0.982, "menil-model-1": 1.007, "menil-model-2": 1.023, "menil-model-3": 1.015, "menil-model-4": 1.018, "menil-plan": 1.087, "menil-section-a": 1.461, "menil-section-b": 1.541, "menil-site-plan": 1.0, "menil-transformations": 0.48, "mfah-aerial": 1.0, "mfah-axon": 1.0, "mfah-cantilever": 1.0, "mfah-hero": 1.5, "mfah-plan-12": 0.816, "mfah-section": 1.518, "mfah-site-plan": 0.793, "totem-color": 0.71, "totem-detail": 0.71, "totem-hero": 0.714, "totem-plan-section": 0.621, "totem-unit": 0.621};
 const app = document.getElementById("app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const pad = n => String(n).padStart(2, "0");
