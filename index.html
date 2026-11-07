@@ -73,7 +73,7 @@ p { margin: 0; }
 .hero { padding-block: clamp(40px, 7vw, 96px) clamp(48px, 8vw, 112px); align-items: end; row-gap: 40px; }
 .hero-text { grid-column: 1 / span 5; display: grid; gap: 28px; align-self: end; }
 .hero-name { font-size: var(--step-3); letter-spacing: 0.08em; text-transform: uppercase; }
-.hero-lede { font-size: var(--step-1); font-weight: 300; max-width: 30ch; line-height: 1.45; }
+.hero-lede { font-size: var(--step-1); font-weight: 300; max-width: 34ch; line-height: 1.45; }
 .hero-meta { color: var(--muted); font-size: var(--step--1); display: grid; gap: 2px; }
 .hero-figure { grid-column: 7 / -1; margin: 0; }
 .hero-figure img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 60% 80%; background: #000; }
@@ -88,13 +88,12 @@ p { margin: 0; }
 /* Project index */
 .projects { row-gap: clamp(48px, 7vw, 88px); }
 .card { text-decoration: none; display: grid; gap: 14px; align-content: start; }
-.card:nth-child(4n+1) { grid-column: 1 / span 7; }
-.card:nth-child(4n+2) { grid-column: 9 / span 4; margin-top: clamp(40px, 10vw, 160px); }
+.card:nth-child(4n+1) { grid-column: 1 / span 5; }
+.card:nth-child(4n+2) { grid-column: 7 / span 5; margin-top: clamp(32px, 8vw, 120px); }
 .card:nth-child(4n+3) { grid-column: 2 / span 5; }
-.card:nth-child(4n+4) { grid-column: 7 / span 6; margin-top: clamp(24px, 6vw, 96px); }
+.card:nth-child(4n+4) { grid-column: 8 / span 5; margin-top: clamp(32px, 8vw, 120px); }
 .card .frame { overflow: hidden; background: var(--plate); }
 .card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.6s ease; }
-.card:nth-child(4n+2) img { aspect-ratio: 4 / 5; }
 .card:hover img { transform: scale(1.025); }
 .card-title { display: flex; gap: 14px; align-items: baseline; }
 .card-num { font-size: var(--step--1); color: var(--muted); font-variant-numeric: tabular-nums; }
@@ -123,6 +122,7 @@ p { margin: 0; }
 .bio p { font-size: var(--step-1); font-weight: 300; line-height: 1.5; max-width: 36ch; }
 .contact { display: grid; gap: 10px; margin-top: 12px; font-size: var(--step-0); }
 .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.contact-row a { overflow-wrap: anywhere; }
 .contact-label { color: var(--muted); font-size: var(--step--1); width: 5.5em; }
 .copy-btn {
   font: inherit; font-size: var(--step--1); color: var(--muted); background: none;
@@ -200,7 +200,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .hero-text, .hero-figure, .bio, .cv, .p-title, .titleblock, .b-text, .b-medium { grid-column: 1 / -1; }
   .hero-figure { order: -1; }
   .card:nth-child(n) { grid-column: 1 / -1; margin-top: 0; }
-  .card:nth-child(n) img { aspect-ratio: 4 / 3; }
   .other-item { grid-column: span 6; }
   .b-split .fig, .b-split .b-text { grid-column: 1 / -1; }
   .b-quad { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -269,7 +268,7 @@ const PROJECTS = [
       { split: [["totem-hero", "Final model"], ["This project explores the aggregation of a single base unit, composed of three intersecting triangular prisms, through a dual system of joinery.",
         "The form charts a vertical transition in structural logic, shifting from a heavy, orthogonally interlocked base to a delicate, surface-resting condition at the apex. This gradual release of joint rigidity results in a progressively lighter, expanding spatial canopy."]] },
       { pair: [["totem-unit", "Base unit and aggregation"], ["totem-plan-section", "Top: plan, cut at 1'-0\". Bottom: section."]] },
-      { pair: [["totem-detail", "Detail of the upper canopy"], ["cover-totem-bw", "Study photograph"]] }
+      { pair: [["totem-detail", "Detail of the upper canopy"], ["totem-color", "Study photograph"]] }
     ]
   },
   {
@@ -376,7 +375,7 @@ function homeView() {
   <section class="wrap grid hero">
     <div class="hero-text">
       <h1 class="hero-name">Brandon Nguyen</h1>
-      <p class="hero-lede">Architecture student at Rice University, working through models, drawings and the space between them.</p>
+      <p class="hero-lede">Architecture student at Rice University. My goal is to design with urbanism and environmental conservation in mind.</p>
       <div class="hero-meta"><span>B.A. 2029, B.Arch 2031</span><span>Houston and Boston</span></div>
     </div>
     <figure class="hero-figure">
@@ -404,18 +403,19 @@ function homeView() {
       <div class="section-head"><h2>About</h2></div>
       <div class="grid about">
         <div class="bio">
-          <p>I'm studying architecture at the Rice School of Architecture. I work mostly through physical models and hand drawing, then carry that thinking into Rhino and Grasshopper.</p>
-          <p>Outside studio I design for The Thresher and Rice Design Board, paint, take photographs and build things in wood. I'm especially interested in urbanism, transportation and conservation.</p>
+          <p>I'm an architecture student at the Rice School of Architecture, minoring in Environmental Science. I work mostly through physical models and hand drawing, then carry that thinking into digital media.</p>
+          <p>Outside studio I design for The Thresher and Rice Design Board. I also enjoy painting, photography, woodworking, and spending time outdoors. I'm especially interested in urbanism, transportation, and conservation.</p>
           <div class="contact">
-            <div class="contact-row"><span class="contact-label">Email</span><a href="mailto:bn38@rice.edu" id="email">bn38@rice.edu</a><button class="copy-btn" type="button" id="copy-email">Copy</button></div>
-            <div class="contact-row"><span class="contact-label">LinkedIn</span><a href="https://www.linkedin.com/in/brandonb-nguyen-archi/" target="_blank" rel="noopener">brandonb-nguyen-archi</a></div>
+            <div class="contact-row"><span class="contact-label">Rice</span><a href="mailto:bn38@rice.edu">bn38@rice.edu</a><button class="copy-btn" type="button" data-copy="bn38@rice.edu">Copy</button></div>
+            <div class="contact-row"><span class="contact-label">Personal</span><a href="mailto:brandon.nguyen1249@gmail.com">brandon.nguyen1249@gmail.com</a><button class="copy-btn" type="button" data-copy="brandon.nguyen1249@gmail.com">Copy</button></div>
+            <div class="contact-row"><span class="contact-label">LinkedIn</span><a href="https://www.linkedin.com/in/brandon-nguyen-archi/" target="_blank" rel="noopener">brandon-nguyen-archi</a></div>
           </div>
         </div>
         <div class="cv">
           <div>
             <h3>Education</h3>
             <dl>
-              <div class="cv-row"><dt>2025&ndash;2031</dt><dd>Rice University School of Architecture<small>Candidate for B.A. in Architecture (2029) and B.Arch (2031). GPA 3.94</small></dd></div>
+              <div class="cv-row"><dt>2025&ndash;2031</dt><dd>Rice University School of Architecture<small>Candidate for B.A. in Architecture (2029) and B.Arch (2031), minor in Environmental Science. GPA 3.94</small></dd></div>
             </dl>
           </div>
           <div>
@@ -454,13 +454,15 @@ function projectView(p) {
   const i = PROJECTS.indexOf(p);
   const prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length];
   const next = PROJECTS[(i + 1) % PROJECTS.length];
-  const facts = Object.entries(p.facts).filter(([, v]) => v !== "None");
-  const cells = [
-    ...facts.map(([k, v]) => `<div class="tb-cell${["Site", "Media", "Instructors", "Instructor"].includes(k) ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`),
-    `<div class="tb-cell"><span class="tb-label">Sheet</span><span class="tb-value">${pad(i + 1)} of ${pad(PROJECTS.length)}</span></div>`
-  ];
-  // Put wide cells first so the two-column cells pair up underneath.
-  cells.sort((a, b) => (b.includes(" wide") ? 1 : 0) - (a.includes(" wide") ? 1 : 0));
+  const f = p.facts;
+  const cell = (k, v, wide) => `<div class="tb-cell${wide ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`;
+  const instrKey = f.Instructors ? "Instructors" : "Instructor";
+  // Media spans the full width; the rest pair up, with the instructor box in the bottom-right corner.
+  const half = [cell("Course", f.Course), cell("Term", f.Term), cell("Type", f.Type)];
+  if (f.Site && f.Site !== "None") half.push(cell("Site", f.Site));
+  if (half.length % 2 === 0) half.push(`<div class="tb-cell" aria-hidden="true"></div>`);
+  half.push(cell(instrKey, f[instrKey]));
+  const cells = [cell("Media", f.Media, true), ...half];
 
   const blocks = p.blocks.map((b, n) => {
     if (b.text) return textBlock(b.text);
@@ -517,16 +519,16 @@ route();
 
 /* ---------- Copy email ---------- */
 function bindCopy() {
-  const btn = document.getElementById("copy-email");
-  if (!btn) return;
-  btn.addEventListener("click", () => {
-    const text = "bn38@rice.edu";
-    const done = () => { btn.textContent = "Copied"; setTimeout(() => (btn.textContent = "Copy"), 1600); };
-    const fallback = () => {
-      const r = document.createRange(); r.selectNodeContents(document.getElementById("email"));
-      const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected";
-    };
-    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  document.querySelectorAll("[data-copy]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const text = btn.dataset.copy;
+      const done = () => { btn.textContent = "Copied"; setTimeout(() => (btn.textContent = "Copy"), 1600); };
+      const fallback = () => {
+        const r = document.createRange(); r.selectNodeContents(btn.previousElementSibling);
+        const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected";
+      };
+      try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+    });
   });
 }
 
