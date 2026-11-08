@@ -76,7 +76,8 @@ p { margin: 0; }
 /* Home hero */
 .hero { padding-block: clamp(40px, 7vw, 96px) clamp(48px, 8vw, 112px); align-items: end; row-gap: 40px; }
 .hero-text { grid-column: 1 / span 5; display: grid; gap: 28px; align-self: end; }
-.hero-name { font-size: var(--step-3); letter-spacing: 0.08em; text-transform: uppercase; }
+.hero-name { font-size: var(--step-3); letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 0.35em; }
+.hero-mark { flex: none; width: auto; height: 2.1em; overflow: visible; }
 .hero-lede { font-size: var(--step-1); font-weight: 300; max-width: 34ch; line-height: 1.45; }
 .hero-meta { color: var(--muted); font-size: var(--step--1); display: grid; gap: 2px; }
 .hero-figure { grid-column: 7 / -1; margin: 0; }
@@ -506,7 +507,7 @@ function homeView() {
   return `
   <section class="wrap grid hero">
     <div class="hero-text">
-      <h1 class="hero-name">Brandon Nguyen</h1>
+      <h1 class="hero-name"><svg class="hero-mark" viewBox="-3 -3 98.1 106.0" aria-hidden="true" focusable="false"><path d="M26.3 5.3L35.4 0M35.4 0L42.9 1.8M55.6 98.3L63.1 100M26.3 5.3L33.1 27.1M38.5 44L55.6 98.3M35.4 0L40.9 26.7M44.2 42.8L55.6 98.3M42.9 1.8L47.4 23.4M51.4 42.8L63.1 100M47.4 23.4L45.8 24.4M45.8 24.4L46.5 28.1M42 44.1L44.2 42.8M44.2 42.8L51.4 42.8M26.7 30.8L35.9 25.5M35.9 25.5L38.6 38.5M38.6 38.5L29.5 43.9M29.5 43.9L26.7 30.8M35.9 25.5L54.8 30.1M65.1 32.7L92.1 39.3M38.6 38.5L92.1 39.3M92.1 39.3L83.3 44.6M29.5 43.9L42 44.1M51.7 44.2L83.3 44.6M68.7 10.8L76.2 12.7M76.2 12.7L78.9 25.7M78.9 25.7L71.3 23.8M71.3 23.8L68.7 10.8M68.7 10.8L47.4 23.4M27.6 35L0 51.1M71.3 23.8L55.3 33.3M37 44L3 64.1M78.9 25.7L61.1 34.7M39.1 45.8L3 64.1M0 51.1L3 64.1M54.8 30.1L55.3 33.3M55.3 33.3L61.1 34.7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><span>Brandon Nguyen</span></h1>
       <p class="hero-lede">Architecture student at Rice University. My goal is to design with urbanism and environmental conservation in mind.</p>
       <div class="hero-meta"><span>B.A. 2029, B.Arch 2031</span><span>Houston and Boston</span></div>
     </div>
