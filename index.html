@@ -237,6 +237,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
    The header, footer and home page stay at full size; phones and tablets are unchanged. */
 @media (min-width: 861px) {
   .project { zoom: 0.8; }
+  /* Keep the title-block dividers a full pixel after scaling. */
+  .project .titleblock { gap: 1.25px; }
 }
 @media (max-width: 860px) {
   .b-pair.b-center { grid-column: 1 / -1; }
@@ -558,11 +560,13 @@ function projectView(p) {
   const f = p.facts;
   const cell = (k, v, wide) => `<div class="tb-cell${wide ? " wide" : ""}"><span class="tb-label">${esc(k)}</span><span class="tb-value">${esc(v)}</span></div>`;
   const instrKey = f.Instructors ? "Instructors" : "Instructor";
-  // Media spans the full width; the rest pair up, with course and instructor side by side on the bottom row.
-  const half = [cell("Term", f.Term), cell("Type", f.Type)];
-  if (f.Site && f.Site !== "None") half.push(cell("Site", f.Site), `<div class="tb-cell" aria-hidden="true"></div>`);
-  half.push(cell("Course", f.Course), cell(instrKey, f[instrKey]));
-  const cells = [cell("Media", f.Media, true), ...half];
+  // Site (when there is one) and Media span the full width at the top; the rest pair up below,
+  // with course and instructor side by side on the bottom row.
+  const wide = [];
+  if (f.Site && f.Site !== "None") wide.push(cell("Site", f.Site, true));
+  wide.push(cell("Media", f.Media, true));
+  const half = [cell("Term", f.Term), cell("Type", f.Type), cell("Course", f.Course), cell(instrKey, f[instrKey])];
+  const cells = [...wide, ...half];
 
   const blocks = p.blocks.map((b, n) => {
     if (b.text) return textBlock(b.text);
